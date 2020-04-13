@@ -7,7 +7,8 @@ import './App.css';
 export class App extends Component {
 	state = {
 		books: [],
-		error: null
+		error: null,
+		loading: false
 	};
 
 	updateError = (err) => {

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import BookList from './components/BookList';
-import Filter from './components/Filter';
 import Search from './components/Search';
 
 import './App.css';
@@ -8,21 +7,21 @@ import './App.css';
 export class App extends Component {
 	state = {
 		books: [],
-		filter: null,
-		printType: null,
-		searchTerm: '',
+		error: null
 	};
 
-	updateTerm = (term) => {
-		if (term) {
+	updateError = (err) => {
+		if (err) {
 			this.setState({
-				searchTerm: term,
-			});
+				error: err,
+				books: [],
+		});
 		}
 	};
 
 	updateBooks = (result) => {
 		this.setState({
+			error: null,
 			books: result,
 		});
 	};
@@ -33,13 +32,14 @@ export class App extends Component {
 				<header className='header'>
 					<h1>Google Book Search</h1>
 				</header>
-				<BookList />
-				<Filter />
 				<Search
-					searchTerm={this.state.searchTerm}
-					updateTerm={this.updateTerm}
 					updateBooks={this.updateBooks}
+					updateError={this.updateError}
 				/>
+				<div>
+				{this.state.error ? this.state.error : ''}
+				</div>
+				<BookList books={this.state.books}/>
 			</div>
 		);
 	}
